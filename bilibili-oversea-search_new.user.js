@@ -2,7 +2,7 @@
 // @name         bilibili海外区域搜索_new
 // @description  为哔哩哔哩网页端增加番剧出差搜索能力
 // @homepageURL     https://github.com/gamekingv/bilibili-oversea-search
-// @version      0.2.0
+// @version      0.2.1
 // @author       gameking, Howard
 // @include      https://search.bilibili.com/*
 // @grant        GM_xmlhttpRequest
