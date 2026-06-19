@@ -52,6 +52,7 @@
         console.log(e, e.response);
         if (!e.response || !e.response.data) {
           neterrorNode.classList.remove("hide");
+          neterrorNode.querySelector(".b_text").innerHTML = e.response?.message ? `哎呀！好像加载失败了&gt;.&lt;<br>${e.response.message}` : e.response?.code != null ? `哎呀！好像加载失败了&gt;.&lt; ${e.response.code}` : e.status ? `哎呀！好像加载失败了&gt;.&lt; ${e.status}` : "哎呀！好像加载失败了&gt;.&lt;";
           loadingNode.classList.add("hide");
           return;
         }
@@ -107,11 +108,12 @@
         mediaListNode.replaceChildren(allResultNode);
         pager(page, result.total);
       },
-      onerror: () => {
+      onerror: (e) => {
         loadingNode.classList.add("hide");
         nodataNode.classList.add("hide");
         mediaListNode.classList.add("hide");
         neterrorNode.classList.remove("hide");
+        neterrorNode.querySelector(".b_text").innerHTML = e.response?.message ? `哎呀！好像加载失败了&gt;.&lt;<br>${e.response.message}` : e.status ? `哎呀！好像加载失败了&gt;.&lt; ${e.status}` : "哎呀！好像加载失败了&gt;.&lt;";
       },
     });
   }
@@ -155,6 +157,7 @@
         if (!e.response || !response.data) {
           loadingNode.classList.add("hide");
           neterrorNode.classList.remove("hide");
+          neterrorNode.querySelector(".b_text").innerHTML = response.message ? `哎呀！好像加载失败了&gt;.&lt;<br>${response.message}` : response.code != null ? `哎呀！好像加载失败了&gt;.&lt; ${response.code}` : e.status ? `哎呀！好像加载失败了&gt;.&lt; ${e.status}` : "哎呀！好像加载失败了&gt;.&lt;";
           return;
         }
         const result = response.data;
@@ -226,11 +229,12 @@ ${score}\
         mediaListNode.replaceChildren(allResultNode);
         pager(page, result.numResults);
       },
-      onerror: () => {
+      onerror: (e) => {
         loadingNode.classList.add("hide");
         nodataNode.classList.add("hide");
         mediaListNode.classList.add("hide");
         neterrorNode.classList.remove("hide");
+        neterrorNode.querySelector(".b_text").innerHTML = e.response?.message ? `哎呀！好像加载失败了&gt;.&lt;<br>${e.response.message}` : e.status ? `哎呀！好像加载失败了&gt;.&lt; ${e.status}` : "哎呀！好像加载失败了&gt;.&lt;";
       },
     });
   }
