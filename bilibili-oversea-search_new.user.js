@@ -1,5 +1,6 @@
 // ==UserScript==
 // @name         bilibili海外区域搜索_new
+// @description  为哔哩哔哩网页端增加番剧出差搜索能力
 // @homepageURL     https://github.com/gamekingv/bilibili-oversea-search
 // @version      0.2.0
 // @author       gameking, Howard
@@ -52,7 +53,13 @@
         console.log(e, e.response);
         if (!e.response || !e.response.data) {
           neterrorNode.classList.remove("hide");
-          neterrorNode.querySelector(".b_text").innerHTML = e.response?.message ? `哎呀！好像加载失败了&gt;.&lt;<br>${e.response.message}` : e.response?.code != null ? `哎呀！好像加载失败了&gt;.&lt; ${e.response.code}` : e.status ? `哎呀！好像加载失败了&gt;.&lt; ${e.status}` : "哎呀！好像加载失败了&gt;.&lt;";
+          neterrorNode.querySelector(".b_text").innerHTML = e.response?.message
+            ? `哎呀！好像加载失败了&gt;.&lt;<br>${e.response.message}`
+            : e.response?.code != null
+              ? `哎呀！好像加载失败了&gt;.&lt; ${e.response.code}`
+              : e.status
+                ? `哎呀！好像加载失败了&gt;.&lt; ${e.status}`
+                : "哎呀！好像加载失败了&gt;.&lt;";
           loadingNode.classList.add("hide");
           return;
         }
@@ -113,7 +120,11 @@
         nodataNode.classList.add("hide");
         mediaListNode.classList.add("hide");
         neterrorNode.classList.remove("hide");
-        neterrorNode.querySelector(".b_text").innerHTML = e.response?.message ? `哎呀！好像加载失败了&gt;.&lt;<br>${e.response.message}` : e.status ? `哎呀！好像加载失败了&gt;.&lt; ${e.status}` : "哎呀！好像加载失败了&gt;.&lt;";
+        neterrorNode.querySelector(".b_text").innerHTML = e.response?.message
+          ? `哎呀！好像加载失败了&gt;.&lt;<br>${e.response.message}`
+          : e.status
+            ? `哎呀！好像加载失败了&gt;.&lt; ${e.status}`
+            : "哎呀！好像加载失败了&gt;.&lt;";
       },
     });
   }
@@ -157,7 +168,13 @@
         if (!e.response || !response.data) {
           loadingNode.classList.add("hide");
           neterrorNode.classList.remove("hide");
-          neterrorNode.querySelector(".b_text").innerHTML = response.message ? `哎呀！好像加载失败了&gt;.&lt;<br>${response.message}` : response.code != null ? `哎呀！好像加载失败了&gt;.&lt; ${response.code}` : e.status ? `哎呀！好像加载失败了&gt;.&lt; ${e.status}` : "哎呀！好像加载失败了&gt;.&lt;";
+          neterrorNode.querySelector(".b_text").innerHTML = response.message
+            ? `哎呀！好像加载失败了&gt;.&lt;<br>${response.message}`
+            : response.code != null
+              ? `哎呀！好像加载失败了&gt;.&lt; ${response.code}`
+              : e.status
+                ? `哎呀！好像加载失败了&gt;.&lt; ${e.status}`
+                : "哎呀！好像加载失败了&gt;.&lt;";
           return;
         }
         const result = response.data;
@@ -234,7 +251,11 @@ ${score}\
         nodataNode.classList.add("hide");
         mediaListNode.classList.add("hide");
         neterrorNode.classList.remove("hide");
-        neterrorNode.querySelector(".b_text").innerHTML = e.response?.message ? `哎呀！好像加载失败了&gt;.&lt;<br>${e.response.message}` : e.status ? `哎呀！好像加载失败了&gt;.&lt; ${e.status}` : "哎呀！好像加载失败了&gt;.&lt;";
+        neterrorNode.querySelector(".b_text").innerHTML = e.response?.message
+          ? `哎呀！好像加载失败了&gt;.&lt;<br>${e.response.message}`
+          : e.status
+            ? `哎呀！好像加载失败了&gt;.&lt; ${e.status}`
+            : "哎呀！好像加载失败了&gt;.&lt;";
       },
     });
   }
@@ -248,12 +269,13 @@ ${score}\
     const totalPage = Math.ceil(total / 20);
     let pagesNodes =
       '<div class="mt_x50 mb_lg flex_center"><div class="vui_pagenation"><div class="vui_pagenation--btns">';
-    if (page === 1)
+    if (page === 1) {
       pagesNodes +=
         '<button class="vui_button vui_button--disabled vui_pagenation--btn vui_pagenation--btn-side" disabled="">上一页</button>';
-    else
+    } else {
       pagesNodes +=
         '<button class="vui_button vui_pagenation--btn vui_pagenation--btn-side">上一页</button>';
+    }
     if (page - 1 <= 4) {
       for (let i = 1; i < page; i++) {
         pagesNodes += `<button class="vui_button vui_button--no-transition vui_pagenation--btn vui_pagenation--btn-num">${i}</button>`;
@@ -276,12 +298,13 @@ ${score}\
       }
       pagesNodes += `<span class="vui_pagenation--extend">...</span><button class="vui_button vui_button--no-transition vui_pagenation--btn vui_pagenation--btn-num">${totalPage}</button>`;
     }
-    if (page !== totalPage)
+    if (page !== totalPage) {
       pagesNodes +=
         '<button class="vui_button vui_pagenation--btn vui_pagenation--btn-side">下一页</button>';
-    else
+    } else {
       pagesNodes +=
         '<button class="vui_button vui_button--disabled vui_pagenation--btn vui_pagenation--btn-side" disabled="">下一页</button>';
+    }
     pagesNodes += "</div></div></div>";
 
     const newNode = document.createElement("div");
@@ -301,10 +324,11 @@ ${score}\
             if (window.oversea_search_mode === "TH") searchTH(page + 1);
             else if (window.oversea_search_mode === "THM") searchTHM(page + 1);
           } else {
-            if (window.oversea_search_mode === "TH")
+            if (window.oversea_search_mode === "TH") {
               searchTH(parseInt(pageText));
-            else if (window.oversea_search_mode === "THM")
+            } else if (window.oversea_search_mode === "THM") {
               searchTHM(parseInt(pageText));
+            }
           }
           document.querySelector(".btn-to-top").click();
         }),
@@ -490,9 +514,9 @@ ${score}\
           if (
             mutation.type === "attributes" &&
             mutation.target.className.includes("-active")
-          )
+          ) {
             injectButton();
-          else if (
+          } else if (
             mutation.type === "attributes" &&
             !mutation.target.className.includes("-active")
           ) {
