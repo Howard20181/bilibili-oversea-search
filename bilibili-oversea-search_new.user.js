@@ -8,6 +8,7 @@
 // @grant        GM_xmlhttpRequest
 // @grant        GM_setValue
 // @grant        GM_getValue
+// @grant        GM_addStyle
 // ==/UserScript==
 
 (function () {
@@ -352,6 +353,14 @@ ${score}\
     if (loadingNode) loadingNode.classList.add("hide");
   }
   const MyTemplates = {};
+  const hideElementsDuringLoading = `
+        body:has(.vui_loading-body:not(.hide)) *:has(> .media-list),
+        body:has(.search-neterror-container:not(.hide)) *:has(> .media-list),
+        body:has(.search-nodata-container:not(.hide)) *:has(> .media-list) {
+            display: none !important;
+        }
+    `;
+
   function createTemplates() {
     const loadingTpl = document.createElement("div");
     loadingTpl.className = "vui_loading-body vui_loading-body--row";
@@ -370,9 +379,15 @@ ${score}\
     neterrorTpl.innerHTML = `<div ${tag.neterror} class="net-error p_center text_center"><img ${tag.neterror} class="net-error-img" src="//i0.hdslb.com/bfs/static/laputa-search/assets/neterror.65668da4.png" alt=""><p ${tag.neterror} class="mt_lg b_text text3">哎呀！好像加载失败了&gt;.&lt;</p></div>`;
     MyTemplates.neterror = neterrorTpl;
     const mediaListTpl = document.createElement("div");
-    mediaListTpl.innerHTML =
-      '<div class="media-list i_wrapper class=\"hide\""></div>';
+    mediaListTpl.innerHTML = '<div class="media-list i_wrapper hide"></div>';
     MyTemplates.mediaList = mediaListTpl;
+    if (typeof GM_addStyle !== "undefined") {
+      GM_addStyle(hideElementsDuringLoading);
+    } else {
+      const style = document.createElement("style");
+      style.textContent = hideElementsDuringLoading;
+      document.head.appendChild(style);
+    }
   }
   function initCustomSearch() {
     const list = document.querySelector(".search-content");
@@ -548,16 +563,10 @@ ${score}\
         injectObserver();
         document
           .querySelector(".search-panel-popover")
-          .addEventListener("click", () => switchToNormal());
+          ?.addEventListener("click", () => switchToNormal());
         document
           .querySelector(".search-button")
           .addEventListener("click", () => switchToNormal());
-        document
-          .querySelector(".search-input-el")
-          .addEventListener(
-            "keyup",
-            (e) => e.keyCode === 13 && switchToNormal(),
-          );
       }
     }
   });
@@ -572,9 +581,6 @@ ${score}\
     document
       .querySelector(".search-button")
       .addEventListener("click", () => switchToNormal());
-    document
-      .querySelector(".search-input-el")
-      .addEventListener("keyup", (e) => e.keyCode === 13 && switchToNormal());
   }
   const styleLink = document.head.innerHTML.match(
     /\/\/s1.hdslb.com\/bfs\/static\/shanks\/laputa-search\/assets\/index-([^.]+).css/,
