@@ -51,7 +51,6 @@
         .join("&")}`,
       responseType: "json",
       onload: (e) => {
-        console.log(e, e.response);
         if (!e.response || !e.response.data) {
           neterrorNode.classList.remove("hide");
           neterrorNode.querySelector(".b_text").innerHTML = e.response?.message
@@ -164,7 +163,6 @@
       cookie: document.cookie,
       responseType: "json",
       onload: (e) => {
-        console.log(e, e.response);
         const response = e.response || {};
         if (!e.response || !response.data) {
           loadingNode.classList.add("hide");
@@ -554,7 +552,6 @@ ${score}\
   }
   const searchAppObserver = new MutationObserver((mutationsList) => {
     for (let mutation of mutationsList) {
-      console.log(mutation);
       if (
         mutation.addedNodes.length > 0 &&
         mutation.addedNodes[0].tagName === "DIV" &&
